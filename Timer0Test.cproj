@@ -108,7 +108,43 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HLED_Interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HLED_Private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="HLED_Program.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="LSTD_Types.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="LUTILS.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MDIO_Interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MDIO_Private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MDIO_Program.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MTIMER0_Config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MTIMER0_Interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MTIMER0_Private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MTIMER0_Program.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

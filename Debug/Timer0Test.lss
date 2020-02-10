@@ -1,0 +1,422 @@
+
+Timer0Test.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000023e  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000002b2  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000001  00800060  00800060  000002b2  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000002b2  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000002e4  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 000000d0  00000000  00000000  00000320  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000b95  00000000  00000000  000003f0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000007a2  00000000  00000000  00000f85  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000007c0  00000000  00000000  00001727  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  0000014c  00000000  00000000  00001ee8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000618  00000000  00000000  00002034  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000891  00000000  00000000  0000264c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 000000a0  00000000  00000000  00002edd  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   8:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  1c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  2c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  34:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  38:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  4c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_clear_bss>:
+  60:	20 e0       	ldi	r18, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
+
+00000068 <.do_clear_bss_loop>:
+  68:	1d 92       	st	X+, r1
+
+0000006a <.do_clear_bss_start>:
+  6a:	a1 36       	cpi	r26, 0x61	; 97
+  6c:	b2 07       	cpc	r27, r18
+  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
+  70:	0e 94 3e 00 	call	0x7c	; 0x7c <main>
+  74:	0c 94 1d 01 	jmp	0x23a	; 0x23a <_exit>
+
+00000078 <__bad_interrupt>:
+  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000007c <main>:
+void timer0CTCISR(void);
+
+int main(void)
+{
+	/*set PB3 output*/
+	MDIO_u8SetDirectionBit(MDIO_PORTB,MDIO_PB3,MDIO_OUTPUT);
+  7c:	41 e0       	ldi	r20, 0x01	; 1
+  7e:	63 e0       	ldi	r22, 0x03	; 3
+  80:	82 e0       	ldi	r24, 0x02	; 2
+  82:	0e 94 58 00 	call	0xb0	; 0xb0 <MDIO_u8SetDirectionBit>
+	
+	/*Initialize timer0*/
+	MTIMER0_voidInitializeTimer0();
+  86:	0e 94 e4 00 	call	0x1c8	; 0x1c8 <MTIMER0_voidInitializeTimer0>
+/*Call back functions fr ISRs*/
+void timer0OverflowISR(void);
+void timer0CTCISR(void);
+
+int main(void)
+{
+  8a:	c0 e0       	ldi	r28, 0x00	; 0
+  8c:	d0 e0       	ldi	r29, 0x00	; 0
+		 * Fast PWM
+		 *==============================================================*/
+		 #ifdef FAST_PWM
+		 for (u8 i=0;i<100;i++)
+		 {
+			 MTIMER0_voidFastPWM(i);
+  8e:	ce 01       	movw	r24, r28
+  90:	0e 94 eb 00 	call	0x1d6	; 0x1d6 <MTIMER0_voidFastPWM>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  94:	2f e7       	ldi	r18, 0x7F	; 127
+  96:	88 e3       	ldi	r24, 0x38	; 56
+  98:	91 e0       	ldi	r25, 0x01	; 1
+  9a:	21 50       	subi	r18, 0x01	; 1
+  9c:	80 40       	sbci	r24, 0x00	; 0
+  9e:	90 40       	sbci	r25, 0x00	; 0
+  a0:	e1 f7       	brne	.-8      	; 0x9a <main+0x1e>
+  a2:	00 c0       	rjmp	.+0      	; 0xa4 <main+0x28>
+  a4:	00 00       	nop
+  a6:	21 96       	adiw	r28, 0x01	; 1
+	{
+		/*==============================================================
+		 * Fast PWM
+		 *==============================================================*/
+		 #ifdef FAST_PWM
+		 for (u8 i=0;i<100;i++)
+  a8:	c4 36       	cpi	r28, 0x64	; 100
+  aa:	d1 05       	cpc	r29, r1
+  ac:	81 f7       	brne	.-32     	; 0x8e <main+0x12>
+  ae:	ed cf       	rjmp	.-38     	; 0x8a <main+0xe>
+
+000000b0 <MDIO_u8SetDirectionBit>:
+ *			     (0) means no error,(1) means Undefined PORT Argument, (2) means Bit number out of range, (3) means status value out of range
+ */
+u8 MDIO_u8SetDirectionBit(u8 Copy_u8Reg,u8 Copy_u8Bit,u8 Copy_u8Status)
+{
+	/*bit number check condition*/
+	if( (Copy_u8Bit >= 0) && (Copy_u8Bit < 8) )
+  b0:	68 30       	cpi	r22, 0x08	; 8
+  b2:	08 f0       	brcs	.+2      	; 0xb6 <MDIO_u8SetDirectionBit+0x6>
+  b4:	7f c0       	rjmp	.+254    	; 0x1b4 <MDIO_u8SetDirectionBit+0x104>
+	{
+		/*Status value check condition*/
+		if ( (0 == Copy_u8Status) || (1 == Copy_u8Status) )
+  b6:	42 30       	cpi	r20, 0x02	; 2
+  b8:	08 f0       	brcs	.+2      	; 0xbc <MDIO_u8SetDirectionBit+0xc>
+  ba:	7e c0       	rjmp	.+252    	; 0x1b8 <MDIO_u8SetDirectionBit+0x108>
+		{
+			/*register switch case*/
+			switch (Copy_u8Reg)
+  bc:	82 30       	cpi	r24, 0x02	; 2
+  be:	31 f1       	breq	.+76     	; 0x10c <MDIO_u8SetDirectionBit+0x5c>
+  c0:	18 f4       	brcc	.+6      	; 0xc8 <MDIO_u8SetDirectionBit+0x18>
+  c2:	81 30       	cpi	r24, 0x01	; 1
+  c4:	39 f0       	breq	.+14     	; 0xd4 <MDIO_u8SetDirectionBit+0x24>
+  c6:	7a c0       	rjmp	.+244    	; 0x1bc <MDIO_u8SetDirectionBit+0x10c>
+  c8:	83 30       	cpi	r24, 0x03	; 3
+  ca:	e1 f1       	breq	.+120    	; 0x144 <MDIO_u8SetDirectionBit+0x94>
+  cc:	84 30       	cpi	r24, 0x04	; 4
+  ce:	09 f4       	brne	.+2      	; 0xd2 <MDIO_u8SetDirectionBit+0x22>
+  d0:	55 c0       	rjmp	.+170    	; 0x17c <MDIO_u8SetDirectionBit+0xcc>
+  d2:	74 c0       	rjmp	.+232    	; 0x1bc <MDIO_u8SetDirectionBit+0x10c>
+			{
+				/*set bit corresponding DDR reg value with status value*/
+				case MDIO_PORTA : {MDIO_DDRA = L_UTILS_SET_BIT_VALUE(MDIO_DDRA,Copy_u8Bit,Copy_u8Status); return 0;} break;
+  d4:	41 11       	cpse	r20, r1
+  d6:	0d c0       	rjmp	.+26     	; 0xf2 <MDIO_u8SetDirectionBit+0x42>
+  d8:	9a b3       	in	r25, 0x1a	; 26
+  da:	21 e0       	ldi	r18, 0x01	; 1
+  dc:	30 e0       	ldi	r19, 0x00	; 0
+  de:	02 c0       	rjmp	.+4      	; 0xe4 <MDIO_u8SetDirectionBit+0x34>
+  e0:	22 0f       	add	r18, r18
+  e2:	33 1f       	adc	r19, r19
+  e4:	6a 95       	dec	r22
+  e6:	e2 f7       	brpl	.-8      	; 0xe0 <MDIO_u8SetDirectionBit+0x30>
+  e8:	82 2f       	mov	r24, r18
+  ea:	80 95       	com	r24
+  ec:	89 23       	and	r24, r25
+  ee:	8a bb       	out	0x1a, r24	; 26
+  f0:	0a c0       	rjmp	.+20     	; 0x106 <MDIO_u8SetDirectionBit+0x56>
+  f2:	2a b3       	in	r18, 0x1a	; 26
+  f4:	81 e0       	ldi	r24, 0x01	; 1
+  f6:	90 e0       	ldi	r25, 0x00	; 0
+  f8:	02 c0       	rjmp	.+4      	; 0xfe <MDIO_u8SetDirectionBit+0x4e>
+  fa:	88 0f       	add	r24, r24
+  fc:	99 1f       	adc	r25, r25
+  fe:	6a 95       	dec	r22
+ 100:	e2 f7       	brpl	.-8      	; 0xfa <MDIO_u8SetDirectionBit+0x4a>
+ 102:	82 2b       	or	r24, r18
+ 104:	8a bb       	out	0x1a, r24	; 26
+ 106:	8a bb       	out	0x1a, r24	; 26
+ 108:	80 e0       	ldi	r24, 0x00	; 0
+ 10a:	08 95       	ret
+				case MDIO_PORTB : {MDIO_DDRB = L_UTILS_SET_BIT_VALUE(MDIO_DDRB,Copy_u8Bit,Copy_u8Status); return 0;} break;
+ 10c:	41 11       	cpse	r20, r1
+ 10e:	0d c0       	rjmp	.+26     	; 0x12a <MDIO_u8SetDirectionBit+0x7a>
+ 110:	97 b3       	in	r25, 0x17	; 23
+ 112:	21 e0       	ldi	r18, 0x01	; 1
+ 114:	30 e0       	ldi	r19, 0x00	; 0
+ 116:	02 c0       	rjmp	.+4      	; 0x11c <MDIO_u8SetDirectionBit+0x6c>
+ 118:	22 0f       	add	r18, r18
+ 11a:	33 1f       	adc	r19, r19
+ 11c:	6a 95       	dec	r22
+ 11e:	e2 f7       	brpl	.-8      	; 0x118 <MDIO_u8SetDirectionBit+0x68>
+ 120:	82 2f       	mov	r24, r18
+ 122:	80 95       	com	r24
+ 124:	89 23       	and	r24, r25
+ 126:	87 bb       	out	0x17, r24	; 23
+ 128:	0a c0       	rjmp	.+20     	; 0x13e <MDIO_u8SetDirectionBit+0x8e>
+ 12a:	27 b3       	in	r18, 0x17	; 23
+ 12c:	81 e0       	ldi	r24, 0x01	; 1
+ 12e:	90 e0       	ldi	r25, 0x00	; 0
+ 130:	02 c0       	rjmp	.+4      	; 0x136 <MDIO_u8SetDirectionBit+0x86>
+ 132:	88 0f       	add	r24, r24
+ 134:	99 1f       	adc	r25, r25
+ 136:	6a 95       	dec	r22
+ 138:	e2 f7       	brpl	.-8      	; 0x132 <MDIO_u8SetDirectionBit+0x82>
+ 13a:	82 2b       	or	r24, r18
+ 13c:	87 bb       	out	0x17, r24	; 23
+ 13e:	87 bb       	out	0x17, r24	; 23
+ 140:	80 e0       	ldi	r24, 0x00	; 0
+ 142:	08 95       	ret
+				case MDIO_PORTC : {MDIO_DDRC = L_UTILS_SET_BIT_VALUE(MDIO_DDRC,Copy_u8Bit,Copy_u8Status); return 0;} break;
+ 144:	41 11       	cpse	r20, r1
+ 146:	0d c0       	rjmp	.+26     	; 0x162 <MDIO_u8SetDirectionBit+0xb2>
+ 148:	94 b3       	in	r25, 0x14	; 20
+ 14a:	21 e0       	ldi	r18, 0x01	; 1
+ 14c:	30 e0       	ldi	r19, 0x00	; 0
+ 14e:	02 c0       	rjmp	.+4      	; 0x154 <MDIO_u8SetDirectionBit+0xa4>
+ 150:	22 0f       	add	r18, r18
+ 152:	33 1f       	adc	r19, r19
+ 154:	6a 95       	dec	r22
+ 156:	e2 f7       	brpl	.-8      	; 0x150 <MDIO_u8SetDirectionBit+0xa0>
+ 158:	82 2f       	mov	r24, r18
+ 15a:	80 95       	com	r24
+ 15c:	89 23       	and	r24, r25
+ 15e:	84 bb       	out	0x14, r24	; 20
+ 160:	0a c0       	rjmp	.+20     	; 0x176 <MDIO_u8SetDirectionBit+0xc6>
+ 162:	24 b3       	in	r18, 0x14	; 20
+ 164:	81 e0       	ldi	r24, 0x01	; 1
+ 166:	90 e0       	ldi	r25, 0x00	; 0
+ 168:	02 c0       	rjmp	.+4      	; 0x16e <MDIO_u8SetDirectionBit+0xbe>
+ 16a:	88 0f       	add	r24, r24
+ 16c:	99 1f       	adc	r25, r25
+ 16e:	6a 95       	dec	r22
+ 170:	e2 f7       	brpl	.-8      	; 0x16a <MDIO_u8SetDirectionBit+0xba>
+ 172:	82 2b       	or	r24, r18
+ 174:	84 bb       	out	0x14, r24	; 20
+ 176:	84 bb       	out	0x14, r24	; 20
+ 178:	80 e0       	ldi	r24, 0x00	; 0
+ 17a:	08 95       	ret
+				case MDIO_PORTD : {MDIO_DDRD = L_UTILS_SET_BIT_VALUE(MDIO_DDRD,Copy_u8Bit,Copy_u8Status); return 0;} break;
+ 17c:	41 11       	cpse	r20, r1
+ 17e:	0d c0       	rjmp	.+26     	; 0x19a <MDIO_u8SetDirectionBit+0xea>
+ 180:	91 b3       	in	r25, 0x11	; 17
+ 182:	21 e0       	ldi	r18, 0x01	; 1
+ 184:	30 e0       	ldi	r19, 0x00	; 0
+ 186:	02 c0       	rjmp	.+4      	; 0x18c <MDIO_u8SetDirectionBit+0xdc>
+ 188:	22 0f       	add	r18, r18
+ 18a:	33 1f       	adc	r19, r19
+ 18c:	6a 95       	dec	r22
+ 18e:	e2 f7       	brpl	.-8      	; 0x188 <MDIO_u8SetDirectionBit+0xd8>
+ 190:	82 2f       	mov	r24, r18
+ 192:	80 95       	com	r24
+ 194:	89 23       	and	r24, r25
+ 196:	81 bb       	out	0x11, r24	; 17
+ 198:	0a c0       	rjmp	.+20     	; 0x1ae <MDIO_u8SetDirectionBit+0xfe>
+ 19a:	21 b3       	in	r18, 0x11	; 17
+ 19c:	81 e0       	ldi	r24, 0x01	; 1
+ 19e:	90 e0       	ldi	r25, 0x00	; 0
+ 1a0:	02 c0       	rjmp	.+4      	; 0x1a6 <MDIO_u8SetDirectionBit+0xf6>
+ 1a2:	88 0f       	add	r24, r24
+ 1a4:	99 1f       	adc	r25, r25
+ 1a6:	6a 95       	dec	r22
+ 1a8:	e2 f7       	brpl	.-8      	; 0x1a2 <MDIO_u8SetDirectionBit+0xf2>
+ 1aa:	82 2b       	or	r24, r18
+ 1ac:	81 bb       	out	0x11, r24	; 17
+ 1ae:	81 bb       	out	0x11, r24	; 17
+ 1b0:	80 e0       	ldi	r24, 0x00	; 0
+ 1b2:	08 95       	ret
+		}/*end of Status value check condition*/
+	}
+	else
+	{
+		/*Report Bit number out of range error*/
+		return 2;
+ 1b4:	82 e0       	ldi	r24, 0x02	; 2
+ 1b6:	08 95       	ret
+
+		} 
+		else
+		{
+			/*Report Status value out of range error*/
+			return 3;  
+ 1b8:	83 e0       	ldi	r24, 0x03	; 3
+ 1ba:	08 95       	ret
+				/*set bit corresponding DDR reg value with status value*/
+				case MDIO_PORTA : {MDIO_DDRA = L_UTILS_SET_BIT_VALUE(MDIO_DDRA,Copy_u8Bit,Copy_u8Status); return 0;} break;
+				case MDIO_PORTB : {MDIO_DDRB = L_UTILS_SET_BIT_VALUE(MDIO_DDRB,Copy_u8Bit,Copy_u8Status); return 0;} break;
+				case MDIO_PORTC : {MDIO_DDRC = L_UTILS_SET_BIT_VALUE(MDIO_DDRC,Copy_u8Bit,Copy_u8Status); return 0;} break;
+				case MDIO_PORTD : {MDIO_DDRD = L_UTILS_SET_BIT_VALUE(MDIO_DDRD,Copy_u8Bit,Copy_u8Status); return 0;} break;
+				default         : return 1;   /*error Undefined Port*/
+ 1bc:	81 e0       	ldi	r24, 0x01	; 1
+		/*Report Bit number out of range error*/
+		return 2;
+
+	}/*end of bit number check condition*/ 
+
+}/*end of MDIO_u8SetDirectionBit()*/
+ 1be:	08 95       	ret
+
+000001c0 <MTIMER0_voidStartTimer>:
+ * return      : void  
+ */
+ void MTIMER0_voidStopTimer(void)
+ {
+	 /*Stop TCNT0 Reg counting by loading zeros in CS00,CS01,CS02*/
+ 	 MTIMER0_TCCR0 = MTIMER0_u8TCCR0Value & MTIMER0_STOP_MASK; 
+ 1c0:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+ 1c4:	83 bf       	out	0x33, r24	; 51
+ 1c6:	08 95       	ret
+
+000001c8 <MTIMER0_voidInitializeTimer0>:
+	
+	/*Choose OC0 Pin Mode*/
+	/*mask COM00,COM01 bits with zeros*/
+	MTIMER0_u8TCCR0Value &= MTIMER0_COM_MASK;
+	/*Put mode in COM00,COM01 bits*/
+	MTIMER0_u8TCCR0Value |= (MTIMER0_OC0_MODE<<4) ;
+ 1c8:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+ 1cc:	88 7c       	andi	r24, 0xC8	; 200
+ 1ce:	8a 66       	ori	r24, 0x6A	; 106
+ 1d0:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <_edata>
+ 1d4:	08 95       	ret
+
+000001d6 <MTIMER0_voidFastPWM>:
+ * return      : void  
+ */
+ void MTIMER0_voidFastPWM(u8 Copy_u8DutyCycle)
+ {
+	 /*configure PWM Duty Cycle*/
+	 MTIMER0_OCR0 = (Copy_u8DutyCycle*MTIMER0_REG_CAPACITY)/100;
+ 1d6:	98 2f       	mov	r25, r24
+ 1d8:	80 e0       	ldi	r24, 0x00	; 0
+ 1da:	64 e6       	ldi	r22, 0x64	; 100
+ 1dc:	70 e0       	ldi	r23, 0x00	; 0
+ 1de:	0e 94 f5 00 	call	0x1ea	; 0x1ea <__divmodhi4>
+ 1e2:	6c bf       	out	0x3c, r22	; 60
+	 /*Start PWM*/ 
+	 MTIMER0_voidStartTimer();
+ 1e4:	0e 94 e0 00 	call	0x1c0	; 0x1c0 <MTIMER0_voidStartTimer>
+ 1e8:	08 95       	ret
+
+000001ea <__divmodhi4>:
+ 1ea:	97 fb       	bst	r25, 7
+ 1ec:	07 2e       	mov	r0, r23
+ 1ee:	16 f4       	brtc	.+4      	; 0x1f4 <__divmodhi4+0xa>
+ 1f0:	00 94       	com	r0
+ 1f2:	07 d0       	rcall	.+14     	; 0x202 <__divmodhi4_neg1>
+ 1f4:	77 fd       	sbrc	r23, 7
+ 1f6:	09 d0       	rcall	.+18     	; 0x20a <__divmodhi4_neg2>
+ 1f8:	0e 94 09 01 	call	0x212	; 0x212 <__udivmodhi4>
+ 1fc:	07 fc       	sbrc	r0, 7
+ 1fe:	05 d0       	rcall	.+10     	; 0x20a <__divmodhi4_neg2>
+ 200:	3e f4       	brtc	.+14     	; 0x210 <__divmodhi4_exit>
+
+00000202 <__divmodhi4_neg1>:
+ 202:	90 95       	com	r25
+ 204:	81 95       	neg	r24
+ 206:	9f 4f       	sbci	r25, 0xFF	; 255
+ 208:	08 95       	ret
+
+0000020a <__divmodhi4_neg2>:
+ 20a:	70 95       	com	r23
+ 20c:	61 95       	neg	r22
+ 20e:	7f 4f       	sbci	r23, 0xFF	; 255
+
+00000210 <__divmodhi4_exit>:
+ 210:	08 95       	ret
+
+00000212 <__udivmodhi4>:
+ 212:	aa 1b       	sub	r26, r26
+ 214:	bb 1b       	sub	r27, r27
+ 216:	51 e1       	ldi	r21, 0x11	; 17
+ 218:	07 c0       	rjmp	.+14     	; 0x228 <__udivmodhi4_ep>
+
+0000021a <__udivmodhi4_loop>:
+ 21a:	aa 1f       	adc	r26, r26
+ 21c:	bb 1f       	adc	r27, r27
+ 21e:	a6 17       	cp	r26, r22
+ 220:	b7 07       	cpc	r27, r23
+ 222:	10 f0       	brcs	.+4      	; 0x228 <__udivmodhi4_ep>
+ 224:	a6 1b       	sub	r26, r22
+ 226:	b7 0b       	sbc	r27, r23
+
+00000228 <__udivmodhi4_ep>:
+ 228:	88 1f       	adc	r24, r24
+ 22a:	99 1f       	adc	r25, r25
+ 22c:	5a 95       	dec	r21
+ 22e:	a9 f7       	brne	.-22     	; 0x21a <__udivmodhi4_loop>
+ 230:	80 95       	com	r24
+ 232:	90 95       	com	r25
+ 234:	bc 01       	movw	r22, r24
+ 236:	cd 01       	movw	r24, r26
+ 238:	08 95       	ret
+
+0000023a <_exit>:
+ 23a:	f8 94       	cli
+
+0000023c <__stop_program>:
+ 23c:	ff cf       	rjmp	.-2      	; 0x23c <__stop_program>
